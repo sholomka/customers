@@ -10,6 +10,7 @@ class Controller {
      */
     addNewNote() {
         view.add();
+        console.log(1);
     }
 
     /**
@@ -35,6 +36,5 @@ class Controller {
         view.init(this);
     }
 }
-
 
 export default Controller;
