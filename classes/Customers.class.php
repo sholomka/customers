@@ -30,10 +30,16 @@ class Customers  {
     public $result;
 
     /**
-     * Конфиг
+     * Конфиг на production
      * @var
      */
     public $config;
+
+    /**
+     * Локальный конфиг
+     * @var
+     */
+    public $_config;
 
     /**
      * Конструктор
@@ -72,11 +78,11 @@ class Customers  {
     {
         $configPath = realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'config', 'config.php']));
         $_configPath = realpath(implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'config', '_config.php']));
-        $config = require_once($configPath);
+        $this->config = require_once($configPath);
 
         if (file_exists($_configPath)) {
-            $_config = require_once($_configPath);
-            $this->config  = array_replace_recursive ($config , $_config);
+            $this->_config = require_once($_configPath);
+            $this->config  = array_replace_recursive ($this->config , $this->_config);
         }
     }
 
