@@ -5,9 +5,9 @@ class Model {
      * сохранить новую заметку
      */
     add(value) {
-        this.params = {method: 'add', data: value};
+        this.params = {data: value};
         
-        Ajax.send(this.params)
+        Ajax.send('add', this.params)
             .then(response => console.log(response))
             .catch(error => console.error(error));
     }
@@ -15,12 +15,9 @@ class Model {
     /**
      * возвращает массив заметок
      */
-    getAllNotes() {
-        this.params = {method: 'getAllNotes'};
-        return Ajax.send(this.params);
+    getAll() {
+        return Ajax.send('getAll');
     }
-
 }
-
 
 export default Model;

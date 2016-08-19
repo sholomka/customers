@@ -10,7 +10,6 @@ class Controller {
      */
     addNewNote() {
         view.add();
-        console.log(1);
     }
 
     /**
@@ -26,7 +25,7 @@ class Controller {
      * обращается к модели за всеми заметками
      */
     getNotes() {
-        return model.getAllNotes();
+        return model.getAll();
     }
 
     /**

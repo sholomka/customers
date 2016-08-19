@@ -47,7 +47,7 @@ class View {
     render(response) {
         for (let i in response) {
             if (response.hasOwnProperty(i)) {
-                this.createHTML(response[i].title)
+                this.createHTML(response[i].name)
             }
         }
     }
@@ -63,7 +63,7 @@ class View {
             noteValue = [];
 
         for (let i = 0, count = note.length; i < count; i += 1) {
-            noteValue.push({title: note[i].textContent});
+            noteValue.push({name: note[i].textContent});
         }
 
         model.add(noteValue);
@@ -80,7 +80,7 @@ class View {
             noteValue = [];
 
         for (let i = 0, count = note.length; i < count; i += 1) {
-            noteValue.push({title: note[i].textContent});
+            noteValue.push({name: note[i].textContent});
         }
 
         model.add(noteValue);

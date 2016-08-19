@@ -2,4 +2,5 @@
 
 ### Phpstorm ###
 .idea/
+_config.php
 node_modules

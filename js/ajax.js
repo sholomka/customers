@@ -1,20 +1,17 @@
 class Ajax {
-    constructor() {
-    }
 
     /**
      * Реализация ajax-запроса через объект Promise ES6
      *
-     * @param params - параметра Request-запроса
-     * @param beforeSend - делать ли что-то перед отправкой
-     * @param contentType - тип данных Request-запроса
-     * @returns {Promise} - возвращаемый объект Promise
+     * @param params
+     * @param url
+     * @param contentType
+     * @returns {Promise}
      */
-    static send(params, beforeSend=false, contentType='json') {
-        return new Promise(function(resolve, reject) {
+    static send(url, params = {}, contentType = 'json') {
+        return new Promise((resolve, reject) => {
             let request = new XMLHttpRequest(),
-                body = ``,
-                url = '/ajax.php';
+                body = ``;
 
             request.open('POST', url);
 
@@ -36,7 +33,7 @@ class Ajax {
 
             request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-            request.addEventListener('load', function() {
+            request.addEventListener('load', () => {
                 if (request.status === 200) {
                     resolve(JSON.parse(request.responseText));
                 } else {
@@ -44,13 +41,9 @@ class Ajax {
                 }
             }, false);
 
-            request.addEventListener('error', function() {
+            request.addEventListener('error', () => {
                 reject("Can't Make AJAX Request");
             }, false);
-
-            if (beforeSend) {
-                $('.form-box, .form-box .filter-guide.active, .guide-marks').addClass('disable');
-            }
 
             request.send(body);
         });

@@ -1,0 +1,15 @@
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^s.customers$ [NC]
+RewriteRule (.*) $1 [L]
+Options +FollowSymlinks
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) index.php [QSA]
+
+php_flag display_errors Off
+php_value error_reporting 32767
+
+DirectoryIndex index.php 
+
