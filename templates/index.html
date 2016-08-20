@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     <script defer src="js/bundle.js"></script>
+
+    <script type="text/javascript">
+        $("document").ready(function(){
+            $('#modal').modal();
+        });
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -37,47 +46,45 @@
 
 </nav>
 
-<div class="table-responsive" style="margin: 71px 0 0;">
 
-    Количество частных лиц: <?= $countPrivateUsers->count; ?>
 
+<div class="input" style="margin: 71px 0 0;">
+    <input type="text">
+    <button type="submit">Добавить</button>
+</div>
+
+<div class="table-responsive">
     <table class="table table-hover table-bordered table-striped">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Логин</th>
             <th>Имя</th>
-            <th>Сайт</th>
-            <th>Название компании</th>
+            <th>Email</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Улица</th>
             <th>Город</th>
-            <th>Активность</th>
+            <th>Штат</th>
+            <th>Zip</th>
             <th>Действия</th>
         </tr>
         </thead>
         <tbody>
-        <? foreach($users as $user): ?>
+        <? foreach($customers as $customer): ?>
         <tr>
-            <th scope="row"><?= $user->id; ?></th>
-            <td><?= $user->login; ?></td>
-            <td><?= $user->name; ?></td>
-            <td><?= $user->site; ?></td>
-            <td><?= $user->company_name; ?></td>
-            <td><?= $user->city_name; ?></td>
-            <td><?= $user->is_active_status; ?></td>
+            <th scope="row"><?= $customer->id; ?></th>
+            <td><?= $customer->name; ?></td>
+            <td><?= $customer->email; ?></td>
+            <td><?= $customer->telephone; ?></td>
+            <td><?= $customer->address; ?></td>
+            <td><?= $customer->street; ?></td>
+            <td><?= $customer->city; ?></td>
+            <td><?= $customer->state; ?></td>
+            <td><?= $customer->zip; ?></td>
             <td>
-                <? if ($user->is_active == '0'):  ?>
-                <a href="/backend/user_edit?id=<?= $user->id; ?>">
-                    <span class="glyphicon glyphicon-pencil"></span>
-                </a>
-                <? endif; ?>
 
-                <? if ($user->is_active == '1'):  ?>
-                <span class="glyphicon glyphicon-ok"></span>
-                <? endif; ?>
-
-                <? if ($user->is_active == '2' || $user->is_active == '3'):  ?>
+                <span class="glyphicon glyphicon-pencil"></span>
                 <span class="glyphicon glyphicon-remove"></span>
-                <? endif; ?>
             </td>
         </tr>
         <? endforeach; ?>
@@ -87,10 +94,37 @@
 </div>
 
 
-<div class="input">
-    <input type="text">
-    <button type="submit">Добавить</button>
-</div>
 <div class="notes"></div>
+
+
+<br />
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                <h4 class="modal-title" id="myModalLabel">Название модального окна</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Содержимое модального окна</h3>
+            </div>
+            <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+                <button class="btn btn-primary" type="button">Сохранить изменения</button></div>
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-lg btn-success"
+   href="#" data-toggle="modal"
+   data-target="#basicModal">Открыть модальное окно</a>
+
+<script>
+    $('document').ready(function(){
+
+        $('#modal').modal();
+
+    })
+</script>
+
+
 </body>
 </html>

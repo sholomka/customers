@@ -10,14 +10,14 @@ class View {
     init(controller) {
         this.controller = controller;
         
-        let button = document.querySelector('.input button[type=submit]'),
-            notes =  this.controller.getNotes();
+        let button = document.querySelector('.input button[type=submit]');
+            // notes =  this.controller.getNotes();
 
         button.addEventListener('click', () =>  this.controller.addNewNote());
 
-        notes
-            .then(response => this.render(response))
-            .catch(error => console.error(error));
+        // notes
+        //     .then(response => this.render(response))
+        //     .catch(error => console.error(error));
         
     }
 

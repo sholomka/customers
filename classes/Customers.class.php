@@ -53,11 +53,12 @@ class Customers  {
     {
         $this->connectDB();
         $this->parseUrl();
+        $customers = $this->getAll();
 
         if (!empty($this->page)) {
             echo $this->{$this->page}($params);
         } else {
-            echo $this->renderHTML('templates/index.html');
+            echo $this->renderHTML('templates/index.html', compact('customers'));
         }
 
       /*  if (!empty($params)) {
@@ -128,10 +129,11 @@ class Customers  {
      * @return string
      */
     public function getAll() {
-        $sql = "SELECT id, name FROM {$this->table_name}";
+        $sql = "SELECT id, name, email, telephone, address, street, city, state, zip  FROM {$this->table_name}";
         $result = Database::getData($sql);
 
-        return json_encode($result, JSON_UNESCAPED_UNICODE);
+        return $result;
+//        return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
     /**
