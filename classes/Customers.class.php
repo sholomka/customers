@@ -124,7 +124,7 @@ class Customers  {
     }
 
     /**
-     * Реализация метода получения списка customers
+     * Реализация метода получения списка клиентов
      *
      * @return string
      */
@@ -136,28 +136,68 @@ class Customers  {
 //        return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
+
+    public function getOne($id) {
+        $sql = "SELECT id, name, email, telephone, address, street, city, state, zip  
+                FROM {$this->table_name}
+                WHERE id = $id";
+        $result = Database::getData($sql, 'one');
+
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
+    }
+
     /**
      *
      * Реализация метода создания customers
      * @return string
      */
     public function add() {
-        $sql = "DELETE FROM customers";
-        $res = Database::query($sql);
         $params = $this->getParam('data');
+        $sql= "INSERT INTO customers 
+                  SET name = '{$params['name']}',
+                      email = '{$params['email']}',
+                      telephone = '{$params['telephone']}',
+                      address = '{$params['address']}',
+                      street = '{$params['street']}',
+                      city = '{$params['city']}',
+                      state = '{$params['state']}',
+                      zip = '{$params['zip']}'
+                   ";
+        $res = Database::query($sql);
 
-        foreach ($params as $param) {
-            $sql= "INSERT INTO customers
-                      SET name = '{$param['name']}'";
+        $lastID = Database::lastInsertId($res);
+        $data= [];
 
-            $res = Database::query($sql);
-
-            if (!$res) {
-                return json_encode(['response' => 'Ошибка сохранения данных'], JSON_UNESCAPED_UNICODE);
-            }
+        if ($lastID) {
+            $data = $this->getOne($lastID);
         }
 
-        return json_encode(['response' => 'Данные успешно сохранены'], JSON_UNESCAPED_UNICODE);
+        if (!$res) {
+            return json_encode(['response' => 'Ошибка сохранения данных', 'status' => 'false'], JSON_UNESCAPED_UNICODE);
+        }
+
+        return json_encode(['response' => 'Данные успешно сохранены', 'status' => 'success', 'data' => $data], JSON_UNESCAPED_UNICODE);
+    }
+
+    /**
+     * Реализация метода редактирования клиентов
+     */
+    public function edit()
+    {
+        $params = $this->getParam('data');
+        $id= $this->getParam('id');
+        $sql= "UPDATE customers 
+                  SET name = '{$params['name']}',
+                      email = '{$params['email']}',
+                      telephone = '{$params['telephone']}',
+                      address = '{$params['address']}',
+                      street = '{$params['street']}',
+                      city = '{$params['city']}',
+                      state = '{$params['state']}',
+                      zip = '{$params['zip']}'
+                  WHERE id = {$id}    
+                   ";
+        $res = Database::query($sql);
     }
 
     public function getParam($paramName)

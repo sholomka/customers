@@ -2,18 +2,53 @@ import Ajax from './ajax.js';
 
 class Model {
     /**
-     * сохранить новую заметку
+     * Инициализация контроллера
+     *
+     * @param controller
      */
-    add(value) {
-        this.params = {data: value};
+    init(controller) {
+        this.controller = controller;
+    }
+
+    /**
+     * Добавить нового клиента
+     *
+     * @param value
+     */
+    add(value, id = null) {
+        this.params = {data: value},
+            method = id ? 'add' : 'edit';
         
-        Ajax.send('add', this.params)
-            .then(response => console.log(response))
+        Ajax.send(method, this.params)
+            .then(response => {
+                if (response.status == 'success') {
+                    let data = JSON.parse(response.data);
+                    this.controller.render(data);
+                }
+            })
             .catch(error => console.error(error));
     }
 
     /**
-     * возвращает массив заметок
+     * Редактирование клиента
+     *
+     * @param id
+     */
+    edit(id) {
+        this.params = {data: id};
+
+        Ajax.send('edit', this.params)
+            .then(response => {
+                if (response.status == 'success') {
+                    let data = JSON.parse(response.data);
+                    this.controller.render(data);
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
+    /**
+     * возвращает массив клиентов
      */
     getAll() {
         return Ajax.send('getAll');

@@ -12,11 +12,7 @@
 
     <script defer src="js/bundle.js"></script>
 
-    <script type="text/javascript">
-        $("document").ready(function(){
-            $('#modal').modal();
-        });
-    </script>
+
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -76,10 +72,9 @@
             <td><?= $customer->city; ?></td>
             <td><?= $customer->state; ?></td>
             <td><?= $customer->zip; ?></td>
-            <td>
-
-                <span class="glyphicon glyphicon-pencil"></span>
-                <span class="glyphicon glyphicon-remove"></span>
+            <td data-id="<?= $customer->id; ?>">
+                <a href="#"><span class="glyphicon glyphicon-pencil" id="edit"></span></a>
+                <a href="#"> <span class="glyphicon glyphicon-remove" id="delete"></span></span></a>
             </td>
         </tr>
         <? endforeach; ?>
@@ -97,21 +92,51 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
-                <h4 class="modal-title" id="myModalLabel">Название модального окна</h4>
+                <h4 class="modal-title" id="myModalLabel">Добавление клиента</h4>
             </div>
             <div class="modal-body">
-                <h3>Содержимое модального окна</h3>
+                <h3>Данные клиента</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label class="control-label" for="name">Имя:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Телефон:</label>
+                        <input type="text" class="form-control" id="telephone">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Адрес:</label>
+                        <input type="text" class="form-control" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="street">Улица:</label>
+                        <input type="text" class="form-control" id="street">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Город:</label>
+                        <input type="text" class="form-control" id="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">Штат:</label>
+                        <input type="text" class="form-control" id="state">
+                    </div>
+                    <div class="form-group">
+                        <label for="zip">Zip:</label>
+                        <input type="text" class="form-control" id="zip">
+                    </div>
+                </form>
+
             </div>
             <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
-                <button class="btn btn-primary" type="button">Сохранить изменения</button></div>
+                <button class="btn btn-primary" id="save" type="button">Сохранить изменения</button></div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
 </body>
 </html>

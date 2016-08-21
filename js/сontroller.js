@@ -6,14 +6,23 @@ const model = new Model();
 
 class Controller {
     /**
-     * инициирует сохранение заметки моделью и инициирует отображение изменений представлением
+     * инициирует сохранение клиента моделью и инициирует отображение изменений представлением
      */
-    addNewNote() {
-        view.add();
+    add(customer) {
+        model.add(customer);
     }
 
     /**
-     * Удаление заметки
+     * редактинровние клиента
+     *
+     * @param id
+     */
+    edit(customer, id) {
+        model.edit(customer, id);
+    }
+
+    /**
+     * Удаление клиента
      *
      * @param e
      */
@@ -22,10 +31,20 @@ class Controller {
     }
 
     /**
-     * обращается к модели за всеми заметками
+     * обращается к модели за всеми клиентами
      */
     getNotes() {
         return model.getAll();
+    }
+
+    /**
+     * отображает в DOM'e текущее состояние приложения
+     *
+     * @param response
+     * @returns {*}
+     */
+    render(response) {
+        return view.render(response);
     }
 
     /**
@@ -33,6 +52,7 @@ class Controller {
      */
     init() {
         view.init(this);
+        model.init(this);
     }
 }
 
