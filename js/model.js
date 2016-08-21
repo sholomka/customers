@@ -18,7 +18,7 @@ class Model {
     add(value, id = null) {
         this.params = {data: value},
             method = id ? 'add' : 'edit';
-        
+
         Ajax.send(method, this.params)
             .then(response => {
                 if (response.status == 'success') {
