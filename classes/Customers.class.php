@@ -166,6 +166,15 @@ class Customers  {
                       zip = '{$params['zip']}'
                    WHERE id =  {$params['id']}
                    ";
+
+            $res = Database::query($sql);
+
+            if (!$res) {
+                return json_encode(['response' => 'Ошибка сохранения данных', 'status' => 'false'], JSON_UNESCAPED_UNICODE);
+            }
+
+            return json_encode(['response' => 'Данные успешно сохранены', 'status' => 'success'], JSON_UNESCAPED_UNICODE);
+
         } else {
             $sql= "INSERT INTO customers 
                   SET name = '{$params['name']}',
@@ -177,22 +186,24 @@ class Customers  {
                       state = '{$params['state']}',
                       zip = '{$params['zip']}'
                    ";
+
+            $res = Database::query($sql);
+
+            $lastID = Database::lastInsertId($res);
+            $data= [];
+
+            if ($lastID) {
+                $data = $this->getOne($lastID);
+            }
+
+            if (!$res) {
+                return json_encode(['response' => 'Ошибка сохранения данных', 'status' => 'false'], JSON_UNESCAPED_UNICODE);
+            }
+
+            return json_encode(['response' => 'Данные успешно сохранены', 'status' => 'success', 'data' => $data], JSON_UNESCAPED_UNICODE);
         }
 
-        $res = Database::query($sql);
 
-        $lastID = Database::lastInsertId($res);
-        $data= [];
-
-        if ($lastID) {
-            $data = $this->getOne($lastID);
-        }
-
-        if (!$res) {
-            return json_encode(['response' => 'Ошибка сохранения данных', 'status' => 'false'], JSON_UNESCAPED_UNICODE);
-        }
-
-        return json_encode(['response' => 'Данные успешно сохранены', 'status' => 'success', 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
     /**

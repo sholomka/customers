@@ -1,33 +1,33 @@
 class View {
+    static get BASICMODAL() {
+        return $('#basicModal');
+    }
+
     /**
      * отображает в DOM'e текущее состояние приложения, навешивает необходимые обработчики на интерфейс
      */
     init(controller) {
         this.controller = controller;
         
-        let buttonSave =  document.querySelector('#save'),
-            buttonAdd =  document.querySelector('#add'),
-            buttonEdit =  document.querySelector('#edit'),
-            buttonDelete =  document.querySelector('#delete');
+        let buttonSave =  $('#save'),
+            buttonAdd = $('#add'),
+            buttonEdit =  $('.edit'),
+            buttonDelete =  $('.delete');
 
-            // notes =  this.controller.getNotes();
-
-        buttonSave.addEventListener('click', () => this.save());
-        buttonAdd.addEventListener('click', () => this.add());
+        buttonSave.click( () => this.save() );
+        buttonAdd.click( () => this.add() );
 
         if (buttonEdit) {
-            buttonEdit.addEventListener('click', (e) => this.edit(e));
+            buttonEdit.on('click', (e) => {
+                this.edit(e)
+            })
         }
 
         if (buttonDelete) {
-            buttonDelete.addEventListener('click', () => this.delete());
+            buttonEdit.on('click', (e) => {
+                this.delete()
+            });
         }
-
-
-        // notes
-        //     .then(response => this.render(response))
-        //     .catch(error => console.error(error));
-        
     }
 
     /**
@@ -76,7 +76,7 @@ class View {
             customer = {},
             error = false,
             errorClass = document.querySelector('.has-error'),
-            id = $('#basicModal').data().id;
+            id = View.BASICMODAL.attr('data-id');
 
         if (errorClass) {
             errorClass.classList.remove('has-error');
@@ -99,38 +99,46 @@ class View {
             return false;
         } else {
             this.controller.save(customer);
-            $('#basicModal').modal('hide');
-        }
+            
+            let tr = $(`tr[data-id="${id}"]`),
+                name = $('#name').val(),
+                email = $('#email').val(),
+                telephone = $('#telephone').val(),
+                address = $('#address').val(),
+                street = $('#street').val(),
+                city = $('#city').val(),
+                state = $('#state').val(),
+                zip =$('#zip').val();
 
-        // noteValue.push({name: name.value});
-        // let input = document.querySelector('.input input[type=text]');
-        // this.createHTML(input.value);
-        //
-        // let note = document.querySelectorAll('.notes .note'),
-        //     noteValue = [];
-        //
-        // for (let i = 0, count = note.length; i < count; i += 1) {
-        //     noteValue.push({name: note[i].textContent});
-        // }
-        //
-        // model.add(noteValue);
+                tr.find('.id').text(id);
+                tr.find('.name').text(name);
+                tr.find('.email').text(email);
+                tr.find('.telephone').text(telephone);
+                tr.find('.address').text(address);
+                tr.find('.street').text(street);
+                tr.find('.city').text(city);
+                tr.find('.state').text(state);
+                tr.find('.zip').text(zip);
+
+            View.BASICMODAL.modal('hide');
+        }
     }
 
 
     add() {
-
-
-
-        $('#basicModal').data('id', '').modal('show');
-
-
-
+        View.BASICMODAL.data('id', '')
+            .find('.has-error').removeClass('has-error').end()
+            .find('input[type="text"], input[type="email"]').val('').end()
+            .modal('show');
     }
 
     /**
      * Редактирование клиента
      */
     edit(e) {
+
+        View.BASICMODAL.find('.has-error').removeClass('has-error');
+
         let tr = $(e.currentTarget).closest('tr'),
             id = tr.find('.id').text(),
             name = tr.find('.name').text(),
@@ -151,7 +159,8 @@ class View {
         $('#state').val(state);
         $('#zip').val(zip);
 
-       $('#basicModal').attr('data-id', id).modal('show');
+        View.BASICMODAL.attr('data-id', id);
+        View.BASICMODAL.modal('show');
     }
 
     /**
