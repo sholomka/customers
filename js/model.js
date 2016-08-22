@@ -11,33 +11,14 @@ class Model {
     }
 
     /**
-     * Добавить нового клиента
+     * Добавить/редактировать нового клиента
      *
      * @param value
      */
-    add(value, id = null) {
-        this.params = {data: value},
-            method = id ? 'add' : 'edit';
+    save(value) {
+        this.params = {data: value};
 
-        Ajax.send(method, this.params)
-            .then(response => {
-                if (response.status == 'success') {
-                    let data = JSON.parse(response.data);
-                    this.controller.render(data);
-                }
-            })
-            .catch(error => console.error(error));
-    }
-
-    /**
-     * Редактирование клиента
-     *
-     * @param id
-     */
-    edit(id) {
-        this.params = {data: id};
-
-        Ajax.send('edit', this.params)
+        Ajax.send('save', this.params)
             .then(response => {
                 if (response.status == 'success') {
                     let data = JSON.parse(response.data);

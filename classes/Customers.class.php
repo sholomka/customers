@@ -151,9 +151,23 @@ class Customers  {
      * Реализация метода создания customers
      * @return string
      */
-    public function add() {
+    public function save() {
         $params = $this->getParam('data');
-        $sql= "INSERT INTO customers 
+
+        if ($params['id']) {
+            $sql= "UPDATE customers 
+                   SET name = '{$params['name']}',
+                      email = '{$params['email']}',
+                      telephone = '{$params['telephone']}',
+                      address = '{$params['address']}',
+                      street = '{$params['street']}',
+                      city = '{$params['city']}',
+                      state = '{$params['state']}',
+                      zip = '{$params['zip']}'
+                   WHERE id =  {$params['id']}
+                   ";
+        } else {
+            $sql= "INSERT INTO customers 
                   SET name = '{$params['name']}',
                       email = '{$params['email']}',
                       telephone = '{$params['telephone']}',
@@ -163,6 +177,8 @@ class Customers  {
                       state = '{$params['state']}',
                       zip = '{$params['zip']}'
                    ";
+        }
+
         $res = Database::query($sql);
 
         $lastID = Database::lastInsertId($res);

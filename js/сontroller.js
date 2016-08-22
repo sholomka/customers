@@ -8,17 +8,8 @@ class Controller {
     /**
      * инициирует сохранение клиента моделью и инициирует отображение изменений представлением
      */
-    add(customer) {
-        model.add(customer);
-    }
-
-    /**
-     * редактинровние клиента
-     *
-     * @param id
-     */
-    edit(customer, id) {
-        model.edit(customer, id);
+    save(customer) {
+        model.save(customer);
     }
 
     /**
