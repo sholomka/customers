@@ -5,120 +5,129 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script defer src="js/bundle.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Customer Interface</a>
+            </div>
+        </div>
+    </div>
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Customer Interface</a>
+        <a class="btn btn-lg btn-success" id="add" href="#">Добавить</a>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Имя</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th>Адрес</th>
+                    <th>Улица</th>
+                    <th>Город</th>
+                    <th>Штат</th>
+                    <th>Zip</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <? foreach($customers as $customer): ?>
+                <tr data-id="<?= $customer->id; ?>">
+                    <th scope="row" class="id"><?= $customer->id; ?></th>
+                    <td class="name"><?= $customer->name; ?></td>
+                    <td class="email"><?= $customer->email; ?></td>
+                    <td class="telephone"><?= $customer->telephone; ?></td>
+                    <td class="address"><?= $customer->address; ?></td>
+                    <td class="street"><?= $customer->street; ?></td>
+                    <td class="city"><?= $customer->city; ?></td>
+                    <td class="state"><?= $customer->state; ?></td>
+                    <td class="zip"><?= $customer->zip; ?></td>
+                    <td>
+                        <a href="#"><span class="glyphicon glyphicon-pencil edit"></span></a>
+                        <a href="#"> <span class="glyphicon glyphicon-remove delete"></span></span></a>
+                    </td>
+                </tr>
+                <? endforeach; ?>
+                </tbody>
+            </table>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Клиенты</a></li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</nav>
+        <div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="myModalLabel">Добавление клиента</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h3>Данные клиента</h3>
 
-<a style="margin: 71px 0 0;" class="btn btn-lg btn-success" id="add" href="#">+</a>
+                        <form>
+                            <div class="form-group">
+                                <label class="control-label" for="name">Имя:</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="email">Email:</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="telephone">Телефон:</label>
+                                <input type="text" class="form-control" id="telephone">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="address">Адрес:</label>
+                                <input type="text" class="form-control" id="address">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="street">Улица:</label>
+                                <input type="text" class="form-control" id="street">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="city">Город:</label>
+                                <input type="text" class="form-control" id="city">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="state">Штат:</label>
+                                <input type="text" class="form-control" id="state">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="zip">Zip:</label>
+                                <input type="text" class="form-control" id="zip">
+                            </div>
+                        </form>
 
-<div class="table-responsive">
-    <table class="table table-hover table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Имя</th>
-            <th>Email</th>
-            <th>Телефон</th>
-            <th>Адрес</th>
-            <th>Улица</th>
-            <th>Город</th>
-            <th>Штат</th>
-            <th>Zip</th>
-            <th>Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <? foreach($customers as $customer): ?>
-        <tr data-id="<?= $customer->id; ?>">
-            <th scope="row" class="id"><?= $customer->id; ?></th>
-            <td class="name"><?= $customer->name; ?></td>
-            <td class="email"><?= $customer->email; ?></td>
-            <td class="telephone"><?= $customer->telephone; ?></td>
-            <td class="address"><?= $customer->address; ?></td>
-            <td class="street"><?= $customer->street; ?></td>
-            <td class="city"><?= $customer->city; ?></td>
-            <td class="state"><?= $customer->state; ?></td>
-            <td class="zip"><?= $customer->zip; ?></td>
-            <td>
-                <a href="#"><span class="glyphicon glyphicon-pencil edit"></span></a>
-                <a href="#"> <span class="glyphicon glyphicon-remove delete"></span></span></a>
-            </td>
-        </tr>
-        <? endforeach; ?>
-        </tbody>
-    </table>
-</div>
-<div class="notes"></div>
-<br />
-<div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
-                <h4 class="modal-title" id="myModalLabel">Добавление клиента</h4>
+                    </div>
+                    <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+                        <button class="btn btn-primary" id="save" type="button">Сохранить изменения</button></div>
+                </div>
             </div>
-            <div class="modal-body">
-                <h3>Данные клиента</h3>
-
-                <form>
-                    <div class="form-group">
-                        <label class="control-label" for="name">Имя:</label>
-                        <input type="text" class="form-control" id="name">
+        </div>
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                        <h4 class="modal-title" id="myModalLabelDelete">Удаление клиента</h4>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label" for="email">Email:</label>
-                        <input type="email" class="form-control" id="email">
+                    <div class="modal-body">
+                        <span> Вы действительно хотите удалить этого клиента?</span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label" for="telephone">Телефон:</label>
-                        <input type="text" class="form-control" id="telephone">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="address">Адрес:</label>
-                        <input type="text" class="form-control" id="address">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="street">Улица:</label>
-                        <input type="text" class="form-control" id="street">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="city">Город:</label>
-                        <input type="text" class="form-control" id="city">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="state">Штат:</label>
-                        <input type="text" class="form-control" id="state">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" for="zip">Zip:</label>
-                        <input type="text" class="form-control" id="zip">
-                    </div>
-                </form>
-
+                    <div class="modal-footer">
+                        <button class="btn btn-default" type="button" data-dismiss="modal">Отмена</button>
+                        <button class="btn btn-primary" id="del" type="button">Ок</button></div>
+                </div>
             </div>
-            <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
-                <button class="btn btn-primary" id="save" type="button">Сохранить изменения</button></div>
         </div>
     </div>
-</div>
 </body>
 </html>

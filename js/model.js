@@ -20,7 +20,7 @@ class Model {
 
         Ajax.send('save', this.params)
             .then(response => {
-                if (response.status == 'success') {
+                if (response.status == 'success' && response.data) {
                     let data = JSON.parse(response.data);
                     this.controller.render(data);
                 }
@@ -29,10 +29,16 @@ class Model {
     }
 
     /**
-     * возвращает массив клиентов
+     * Удаление клиента
+     *
+     * @param id
      */
-    getAll() {
-        return Ajax.send('getAll');
+    del(id) {
+        this.params = {id: id};
+
+        Ajax.send('delete', this.params)
+            .then(response => console.log(response))
+            .catch(error => console.error(error));
     }
 }
 

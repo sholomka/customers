@@ -1,33 +1,126 @@
 class View {
+    /**
+     * Диалоговое окно сохранения/редактирования
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
     static get BASICMODAL() {
         return $('#basicModal');
     }
 
     /**
-     * отображает в DOM'e текущее состояние приложения, навешивает необходимые обработчики на интерфейс
+     * Диалоговое окно удаления
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get DELETEMODAL() {
+        return $('#deleteModal');
+    }
+
+    /**
+     * Имя клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get NAME() {
+        return $('#name');
+    }
+
+    /**
+     * Email клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get EMAIL() {
+        return $('#email');
+    }
+
+    /**
+     * Телефон клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get TELEPHONE() {
+        return $('#telephone');
+    }
+
+    /**
+     * Адрес клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get ADDRESS() {
+        return $('#address');
+    }
+
+    /**
+     * Улица клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get STREET() {
+        return $('#street');
+    }
+
+    /**
+     * Город клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get CITY() {
+        return $('#city');
+    }
+
+    /**
+     * Страна клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get STATE() {
+        return $('#state');
+    }
+
+    /**
+     * Zip клиента
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @constructor
+     */
+    static get ZIP() {
+        return $('#zip');
+    }
+
+    /**
+     * Навешивает необходимые обработчики на интерфейс
      */
     init(controller) {
         this.controller = controller;
         
         let buttonSave =  $('#save'),
             buttonAdd = $('#add'),
-            buttonEdit =  $('.edit'),
-            buttonDelete =  $('.delete');
+            buttonTable =  $('.table'),
+            buttonDeleteSuccess =  $('#del');
 
         buttonSave.click( () => this.save() );
         buttonAdd.click( () => this.add() );
+        buttonDeleteSuccess.click( () => this.del() );
 
-        if (buttonEdit) {
-            buttonEdit.on('click', (e) => {
-                this.edit(e)
-            })
-        }
+        buttonTable.on('click', '.edit', (e) => {
+            this.edit(e)
+        });
 
-        if (buttonDelete) {
-            buttonEdit.on('click', (e) => {
-                this.delete()
-            });
-        }
+        buttonTable.on('click', '.delete', (e) => {
+            this.showDelWindow(e)
+        });
     }
 
     /**
@@ -50,26 +143,28 @@ class View {
             tr = document.createElement('tr'),
             td = {};
 
+        $(tr).attr('data-id', response.id);
+
         for (let i in response) {
             if (response.hasOwnProperty(i)) {
                 let typeTd = i == 'id' ? 'th' : 'td';
                 td = this.createHTML(typeTd, response[i]);
+                td.className = i;
                 tr.appendChild(td);
             }
         }
 
-        td = this.createHTML('td', `
-                        <td>
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </td>`);
+        td = this.createHTML('td', `<td>
+                                        <a href="#"><span class="glyphicon glyphicon-pencil edit"></span></a>
+                                        <a href="#"> <span class="glyphicon glyphicon-remove delete"></span></a>
+                                    </td>`);
 
         tr.appendChild(td);
         table.appendChild(tr);
     }
 
     /**
-     * Добавление клиента
+     * Сохранения клиента
      */
     save() {
         let values = document.querySelectorAll('#basicModal input[type="text"], #basicModal input[type="email"]'),
@@ -99,32 +194,25 @@ class View {
             return false;
         } else {
             this.controller.save(customer);
-            
-            let tr = $(`tr[data-id="${id}"]`),
-                name = $('#name').val(),
-                email = $('#email').val(),
-                telephone = $('#telephone').val(),
-                address = $('#address').val(),
-                street = $('#street').val(),
-                city = $('#city').val(),
-                state = $('#state').val(),
-                zip =$('#zip').val();
+            let tr = $(`tr[data-id="${id}"]`);
 
-                tr.find('.id').text(id);
-                tr.find('.name').text(name);
-                tr.find('.email').text(email);
-                tr.find('.telephone').text(telephone);
-                tr.find('.address').text(address);
-                tr.find('.street').text(street);
-                tr.find('.city').text(city);
-                tr.find('.state').text(state);
-                tr.find('.zip').text(zip);
+            tr.find('.id').text(id);
+            tr.find('.name').text(View.NAME.val());
+            tr.find('.email').text(View.EMAIL.val());
+            tr.find('.telephone').text(View.TELEPHONE.val());
+            tr.find('.address').text(View.ADDRESS.val());
+            tr.find('.street').text(View.STREET.val());
+            tr.find('.city').text(View.CITY.val());
+            tr.find('.state').text(View.STATE.val());
+            tr.find('.zip').text(View.ZIP.val());
 
             View.BASICMODAL.modal('hide');
         }
     }
 
-
+    /**
+     * Добавление клиента
+     */
     add() {
         View.BASICMODAL.data('id', '')
             .find('.has-error').removeClass('has-error').end()
@@ -136,48 +224,38 @@ class View {
      * Редактирование клиента
      */
     edit(e) {
-
+        let tr = $(e.currentTarget).closest('tr');
         View.BASICMODAL.find('.has-error').removeClass('has-error');
-
-        let tr = $(e.currentTarget).closest('tr'),
-            id = tr.find('.id').text(),
-            name = tr.find('.name').text(),
-            email = tr.find('.email').text(),
-            telephone = tr.find('.telephone').text(),
-            address = tr.find('.address').text(),
-            street = tr.find('.street').text(),
-            city = tr.find('.city').text(),
-            state = tr.find('.state').text(),
-            zip = tr.find('.zip').text();
-
-        $('#name').val(name);
-        $('#email').val(email);
-        $('#telephone').val(telephone);
-        $('#address').val(address);
-        $('#street').val(street);
-        $('#city').val(city);
-        $('#state').val(state);
-        $('#zip').val(zip);
-
-        View.BASICMODAL.attr('data-id', id);
+        View.NAME.val(tr.find('.name').text());
+        View.EMAIL.val(tr.find('.email').text());
+        View.TELEPHONE.val(tr.find('.telephone').text());
+        View.ADDRESS.val(tr.find('.address').text());
+        View.STREET.val(tr.find('.street').text());
+        View.CITY.val( tr.find('.city').text());
+        View.STATE.val(tr.find('.state').text());
+        View.ZIP.val(tr.find('.zip').text());
+        View.BASICMODAL.attr('data-id', tr.find('.id').text());
         View.BASICMODAL.modal('show');
+    }
+
+    /**
+     * Окно удаления клиента
+     */
+    showDelWindow(e) {
+        let tr = $(e.currentTarget).closest('tr');
+        View.DELETEMODAL.attr('data-id', tr.data().id);
+        View.DELETEMODAL.modal('show');
     }
 
     /**
      * Удаление клиента
      */
-    del(elem) {
-        let parent = document.querySelector('.notes');
-        parent.removeChild(elem);
-
-        let note = document.querySelectorAll('.notes .note'),
-            noteValue = [];
-
-        for (let i = 0, count = note.length; i < count; i += 1) {
-            noteValue.push({name: note[i].textContent});
-        }
-
-        model.add(noteValue);
+    del() {
+        let id = View.DELETEMODAL.attr('data-id'),
+            tr = $(`tr[data-id="${id}"]`);
+        this.controller.del(id);
+        tr.remove();
+        View.DELETEMODAL.modal('hide');
     }
 }
 

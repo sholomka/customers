@@ -15,17 +15,10 @@ class Controller {
     /**
      * Удаление клиента
      *
-     * @param e
+     * @param id
      */
-    delNote(e) {
-        view.del(e.currentTarget.parentNode);
-    }
-
-    /**
-     * обращается к модели за всеми клиентами
-     */
-    getNotes() {
-        return model.getAll();
+    del(id) {
+        model.del(id);
     }
 
     /**

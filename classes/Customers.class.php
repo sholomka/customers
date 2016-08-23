@@ -60,16 +60,6 @@ class Customers  {
         } else {
             echo $this->renderHTML('templates/index.html', compact('customers'));
         }
-
-      /*  if (!empty($params)) {
-            foreach($params as $k => $param) {
-                $this->$k = $param;
-            }
-        }*/
-
-       /* if (!empty($method)) {
-            $this->result = $this->{$method}($params);
-        }*/
     }
 
     /**
@@ -111,6 +101,9 @@ class Customers  {
         return ob_get_clean();
     }
 
+    /**
+     * Парсинг УРЛ
+     */
     public function parseUrl()
     {
         $request = trim($_SERVER['REQUEST_URI'], '/');
@@ -133,10 +126,14 @@ class Customers  {
         $result = Database::getData($sql);
 
         return $result;
-//        return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
-
+    /**
+     * Реализация метода получения одного клиента
+     *
+     * @param $id
+     * @return string
+     */
     public function getOne($id) {
         $sql = "SELECT id, name, email, telephone, address, street, city, state, zip  
                 FROM {$this->table_name}
@@ -148,7 +145,7 @@ class Customers  {
 
     /**
      *
-     * Реализация метода создания customers
+     * Реализация метода создания клиентов
      * @return string
      */
     public function save() {
@@ -202,31 +199,30 @@ class Customers  {
 
             return json_encode(['response' => 'Данные успешно сохранены', 'status' => 'success', 'data' => $data], JSON_UNESCAPED_UNICODE);
         }
-
-
     }
 
     /**
-     * Реализация метода редактирования клиентов
+     * Удаление клиентов
+     *
+     * @return string
      */
-    public function edit()
+    public function delete()
     {
-        $params = $this->getParam('data');
-        $id= $this->getParam('id');
-        $sql= "UPDATE customers 
-                  SET name = '{$params['name']}',
-                      email = '{$params['email']}',
-                      telephone = '{$params['telephone']}',
-                      address = '{$params['address']}',
-                      street = '{$params['street']}',
-                      city = '{$params['city']}',
-                      state = '{$params['state']}',
-                      zip = '{$params['zip']}'
-                  WHERE id = {$id}    
-                   ";
+        $id =  $this->getParam('id');
+        $sql = "DELETE FROM customers WHERE id = {$id}";
         $res = Database::query($sql);
+
+        if ($res) {
+            return json_encode(['response' => 'Данные успешно удалены', 'status' => 'success'], JSON_UNESCAPED_UNICODE);
+        }
     }
 
+    /**
+     * Получение параметров
+     *
+     * @param $paramName
+     * @return null
+     */
     public function getParam($paramName)
     {
         $params = json_decode(trim(file_get_contents('php://input')), true);
