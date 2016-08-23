@@ -43,7 +43,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach($customers as $customer): ?>
+                <?php foreach($customers as $customer): ?>
                 <tr data-id="<?= $customer->id; ?>">
                     <th scope="row" class="id"><?= $customer->id; ?></th>
                     <td class="name"><?= $customer->name; ?></td>
@@ -59,7 +59,7 @@
                         <a href="#"> <span class="glyphicon glyphicon-remove delete"></span></span></a>
                     </td>
                 </tr>
-                <? endforeach; ?>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

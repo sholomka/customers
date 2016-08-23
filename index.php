@@ -12,9 +12,5 @@ spl_autoload_register(function ($class) {
     }
 });
 
-
-
 new Customers();
 
-//$params = json_decode(trim(file_get_contents('php://input')), true);
-//echo (new Notes($params['method'], !empty($params['data']) ? $params['data'] : []))->result;
