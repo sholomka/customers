@@ -15,7 +15,7 @@ export class CustomersComponent implements OnInit {
         this.customers = [];
     }
 
-    get basicModal() {
+    static get basicModal() {
         return $('#basicModal');
     }
 
@@ -26,7 +26,7 @@ export class CustomersComponent implements OnInit {
     add(customer: ICustomer): void {
         this.customerService.addCustomers(customer).then(customer => {
             this.customers.push(customer);
-            this.basicModal.modal('hide');
+            CustomersComponent.basicModal.modal('hide');
         });
     }
 }

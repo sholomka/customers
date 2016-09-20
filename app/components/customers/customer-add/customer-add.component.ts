@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { CustomerService } from '../../../shared/customer.service';
 import { Customer } from "../../../shared/customer.model";
+import { CustomersComponent } from "../customers.component";
 
 @Component({
     selector: 'customer-add',
@@ -19,7 +20,7 @@ export class CustomerAddComponent {
     }
 
     add() {
-        $('#basicModal').modal('show');
+        CustomersComponent.basicModal.modal('show');
     }
 
     save() {
