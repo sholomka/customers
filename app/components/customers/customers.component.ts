@@ -26,7 +26,6 @@ export class CustomersComponent implements OnInit {
     add(customer: ICustomer): void {
         this.customerService.addCustomers(customer).then(customer => {
             this.customers.push(customer);
-            CustomersComponent.basicModal.modal('hide');
         });
     }
 }

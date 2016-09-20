@@ -25,5 +25,9 @@ export class CustomerAddComponent {
 
     save() {
         this.create.emit(this.model);
+        CustomersComponent.basicModal.modal('hide');
+        this.model = new Customer();
+
+        console.log(this.model);
     }
 }
