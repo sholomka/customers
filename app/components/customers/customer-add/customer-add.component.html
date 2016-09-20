@@ -1,0 +1,52 @@
+<a class="btn btn-lg btn-success" id="add" (click)="add()" href="#">Добавить</a>
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal">x</button>
+                <h4 class="modal-title" id="myModalLabel">Добавление клиента</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Данные клиента</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label class="control-label" for="name">Имя:</label>
+                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="telephone">Телефон:</label>
+                        <input type="text" class="form-control" id="telephone" name="telephone" [(ngModel)]="model.telephone">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="address">Адрес:</label>
+                        <input type="text" class="form-control" id="address" name="address" [(ngModel)]="model.address">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="street">Улица:</label>
+                        <input type="text" class="form-control" id="street" name="street" [(ngModel)]="model.street">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="city">Город:</label>
+                        <input type="text" class="form-control" id="city" name="city" [(ngModel)]="model.city">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="state">Штат:</label>
+                        <input type="text" class="form-control" id="state" name="state" [(ngModel)]="model.state">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="zip">Zip:</label>
+                        <input type="text" class="form-control" id="zip" name="zip" [(ngModel)]="model.zip">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+                <button class="btn btn-primary" id="save" (click)="save()" type="button">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+</div>

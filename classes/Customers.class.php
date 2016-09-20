@@ -125,7 +125,7 @@ class Customers  {
         $sql = "SELECT id, name, email, telephone, address, street, city, state, zip  FROM {$this->table_name}";
         $result = Database::getData($sql);
 
-        return $result;
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -149,19 +149,27 @@ class Customers  {
      * @return string
      */
     public function save() {
-        $params = $this->getParam('data');
+        $name =  $this->getParam('name');
+        $email =  $this->getParam('email');
+        $telephone = $this->getParam('telephone');
+        $address =  $this->getParam('address');
+        $street =  $this->getParam('street');
+        $state =  $this->getParam('state');
+        $city =  $this->getParam('city');
+        $zip =  $this->getParam('zip');
+        $id =  $this->getParam('id');
 
-        if ($params['id']) {
+        if ($id) {
             $sql= "UPDATE customers 
-                   SET name = '{$params['name']}',
-                      email = '{$params['email']}',
-                      telephone = '{$params['telephone']}',
-                      address = '{$params['address']}',
-                      street = '{$params['street']}',
-                      city = '{$params['city']}',
-                      state = '{$params['state']}',
-                      zip = '{$params['zip']}'
-                   WHERE id =  {$params['id']}
+                   SET name = '{$name}',
+                       email = '{$email}',
+                       telephone = '{$telephone}',
+                       address = '{$address}',
+                       street = '{$street}',
+                       city = '{$city}',
+                       state = '{$state}',
+                       zip = '{$zip}'
+                   WHERE id =  {$id}
                    ";
 
             $res = Database::query($sql);
@@ -174,14 +182,14 @@ class Customers  {
 
         } else {
             $sql= "INSERT INTO customers 
-                  SET name = '{$params['name']}',
-                      email = '{$params['email']}',
-                      telephone = '{$params['telephone']}',
-                      address = '{$params['address']}',
-                      street = '{$params['street']}',
-                      city = '{$params['city']}',
-                      state = '{$params['state']}',
-                      zip = '{$params['zip']}'
+                   SET name = '{$name}',
+                       email = '{$email}',
+                       telephone = '{$telephone}',
+                       address = '{$address}',
+                       street = '{$street}',
+                       city = '{$city}',
+                       state = '{$state}',
+                       zip = '{$zip}'
                    ";
 
             $res = Database::query($sql);
