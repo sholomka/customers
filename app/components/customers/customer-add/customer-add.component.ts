@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { CustomerService } from '../../../shared/customer.service';
 import { Customer } from "../../../shared/customer.model";
 import { CustomersComponent } from "../customers.component";
 
@@ -14,7 +13,7 @@ export class CustomerAddComponent {
 
     model: Customer;
 
-    constructor(private customerService: CustomerService) {
+    constructor() {
          this.model = new Customer();
          this.create = new EventEmitter<Customer>();
     }
