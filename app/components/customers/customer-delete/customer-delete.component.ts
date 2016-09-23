@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'customer-delete',
@@ -8,5 +8,14 @@ import { Component } from '@angular/core';
 
 export class CustomerDeleteComponent {
 
+    @Output() onDelete: EventEmitter<number>;
+    @Input() id: number;
 
+    constructor() {
+        this.onDelete = new EventEmitter<number>();
+    }
+
+    delete() {
+        this.onDelete.emit(this.id);
+    }
 }

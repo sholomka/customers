@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+import { CustomersComponent } from "../customers.component";
 
 @Component({
     selector: 'customer-list',
@@ -8,4 +10,24 @@ import { Component, Input } from '@angular/core';
 
 export class CustomerListComponent {
     @Input() customers;
+    @Input() model;
+
+    @Output() onDelete: EventEmitter<number>;
+
+    constructor() {
+        this.onDelete = new EventEmitter<number>();
+    }
+
+    editShow(customer) {
+        for (let i in this.model) {
+            this.model[i] = customer[i];
+        }
+
+        CustomersComponent.basicModal.modal('show');
+    }
+
+    deleteShow(id) {
+       this.onDelete.emit(id);
+        CustomersComponent.DELETEMODAL.modal('show');
+    }
 }

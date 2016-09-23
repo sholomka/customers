@@ -27,8 +27,8 @@
             <td class="state">{{customer.state}}</td>
             <td class="zip">{{customer.zip}}</td>
             <td>
-                <a href="#"><span class="glyphicon glyphicon-pencil edit"></span></a>
-                <a href="#"><span class="glyphicon glyphicon-remove delete"></span></a>
+                <a href="#"><span class="glyphicon glyphicon-pencil edit" (click)="editShow(customer)"></span></a>
+                <a href="#"><span class="glyphicon glyphicon-remove delete" (click)="deleteShow(customer.id)"></span></a>
             </td>
         </tr>
 

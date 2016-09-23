@@ -28,8 +28,21 @@ export class CustomerService {
         return this.http
             .post(customersUrl, body)
             .toPromise()
-            .then(res => JSON.parse(res.json().data))
+            .then(res => res.json().data ? {'insert': JSON.parse(res.json().data)} : {'update': customer})
             .catch(err => console.error(err));
     }
+
+    deleteCustomers(id: number): Promise<ICustomer> {
+        let body = JSON.stringify({id: id}),
+            options = new RequestOptions({headers: this.headers}),
+            customersUrl = 'delete';
+
+        return this.http
+            .post(customersUrl, body)
+            .toPromise()
+            .then(res => id)
+            .catch(err => console.error(err));
+    }
+
 
 }

@@ -22,11 +22,16 @@ export class CustomerAddComponent {
         CustomersComponent.basicModal.modal('show');
     }
 
-    save() {
-        this.create.emit(this.model);
-        CustomersComponent.basicModal.modal('hide');
-        this.model = new Customer();
 
-        console.log(this.model);
-    }
+
+
+
+
+
+
+    // save() {
+    //     this.create.emit(this.model);
+    //     CustomersComponent.basicModal.modal('hide');
+    //     this.model = new Customer();
+    // }
 }
