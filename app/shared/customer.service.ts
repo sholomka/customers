@@ -20,7 +20,7 @@ export class CustomerService {
     }
 
 
-    addCustomers(customer: ICustomer): Promise<ICustomer> {
+    addCustomers(customer: ICustomer): Promise<any> {
         let body = JSON.stringify(customer),
             options = new RequestOptions({headers: this.headers}),
             customersUrl = 'save';
@@ -32,7 +32,7 @@ export class CustomerService {
             .catch(err => console.error(err));
     }
 
-    deleteCustomers(id: number): Promise<ICustomer> {
+    deleteCustomers(id: number): Promise<number> {
         let body = JSON.stringify({id: id}),
             options = new RequestOptions({headers: this.headers}),
             customersUrl = 'delete';

@@ -11,9 +11,7 @@ import { Customer } from "../../shared/customer.model";
 
 export class CustomersComponent implements OnInit {
     customers: ICustomer[];
-
     model: Customer;
-
     id: number;
 
     constructor(private customerService: CustomerService) {
@@ -21,11 +19,11 @@ export class CustomersComponent implements OnInit {
         this.customers = [];
     }
 
-    static get basicModal() {
+    static get BASICMODAL(): any {
         return $('#basicModal');
     }
 
-    static get DELETEMODAL() {
+    static get DELETEMODAL(): any {
         return $('#deleteModal');
     }
 
@@ -33,17 +31,24 @@ export class CustomersComponent implements OnInit {
         this.customerService.getCustomers().then(customers => this.customers = customers)
     }
 
-    save(customer: ICustomer): void {
-        this.customerService.addCustomers(this.model).then(customer => {
+    showError(input: any): any {
+        return (input.errors && input.errors.required && input.touched) ? {text: 'Это поле не может быть пустым', cssClass: 'has-error'} : {text: '', cssClass: ''};
+    }
 
+    add(model: Customer): void {
+        this.model = model;
+    }
+
+    save(): void {
+        this.customerService.addCustomers(this.model).then(customer => {
             if (customer.hasOwnProperty('update')) {
                 customer = customer.update;
 
-                let index = -1;
+                let index: number = -1;
 
-                for (let i: number in this.customers) {
+                for (let i in this.customers) {
                     if (customer.id == this.customers[i].id) {
-                        index = i;
+                        index = parseInt(i);
                     }
                 }
 
@@ -53,23 +58,24 @@ export class CustomersComponent implements OnInit {
             } else {
                 customer = customer.insert;
                 this.customers.push(customer);
+                this.model = new Customer();
             }
         });
-        CustomersComponent.basicModal.modal('hide');
-        this.model = new Customer();
+
+        CustomersComponent.BASICMODAL.modal('hide');
     }
 
-    setID(id): void {
+    setID(id: number): void {
         this.id = id;
     }
 
-    delete(id): void {
+    delete(id: number): void {
         this.customerService.deleteCustomers(id).then(id => {
-            let index = -1;
+            let index: number = -1;
 
-            for (let i: number in this.customers) {
+            for (let i in this.customers) {
                 if (id == this.customers[i].id) {
-                    index = i;
+                    index = parseInt(i);
                 }
             }
 

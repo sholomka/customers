@@ -19,19 +19,8 @@ export class CustomerAddComponent {
     }
 
     add() {
-        CustomersComponent.basicModal.modal('show');
+        this.model = new Customer();
+        this.create.emit(this.model);
+        CustomersComponent.BASICMODAL.modal('show');
     }
-
-
-
-
-
-
-
-
-    // save() {
-    //     this.create.emit(this.model);
-    //     CustomersComponent.basicModal.modal('hide');
-    //     this.model = new Customer();
-    // }
 }

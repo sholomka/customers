@@ -10,46 +10,55 @@
             </div>
             <div class="modal-body">
                 <h3>Данные клиента</h3>
-
-                <form>
-                    <div class="form-group">
-                        <label class="control-label" for="name">Имя:</label>
-                        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name">
+                <form #formRef="ngForm">
+                    <div class="form-group" [ngClass]="showError(nameRef).cssClass">
+                    <label class="control-label" for="name">Имя:</label>
+                    <input type="text" required class="form-control" id="name" name="name" [(ngModel)]="model.name" #nameRef="ngModel">
+                    <div class="help-block" *ngIf="nameRef.touched">{{showError(nameRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(emailRef).cssClass">
                         <label class="control-label" for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email">
+                        <input type="email" required class="form-control" id="email" name="email" [(ngModel)]="model.email" #emailRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(emailRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(telephoneRef).cssClass">
                         <label class="control-label" for="telephone">Телефон:</label>
-                        <input type="text" class="form-control" id="telephone" name="telephone" [(ngModel)]="model.telephone">
+                        <input type="text" required class="form-control" id="telephone" name="telephone" [(ngModel)]="model.telephone" #telephoneRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(telephoneRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(addressRef).cssClass">
                         <label class="control-label" for="address">Адрес:</label>
-                        <input type="text" class="form-control" id="address" name="address" [(ngModel)]="model.address">
+                        <input type="text" required class="form-control" id="address" name="address" [(ngModel)]="model.address" #addressRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(addressRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(streetRef).cssClass">
                         <label class="control-label" for="street">Улица:</label>
-                        <input type="text" class="form-control" id="street" name="street" [(ngModel)]="model.street">
+                        <input type="text" required class="form-control" id="street" name="street" [(ngModel)]="model.street" #streetRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(streetRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(cityRef).cssClass">
                         <label class="control-label" for="city">Город:</label>
-                        <input type="text" class="form-control" id="city" name="city" [(ngModel)]="model.city">
+                        <input type="text" required class="form-control" id="city" name="city" [(ngModel)]="model.city" #cityRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(cityRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(stateRef).cssClass">
                         <label class="control-label" for="state">Штат:</label>
-                        <input type="text" class="form-control" id="state" name="state" [(ngModel)]="model.state">
+                        <input type="text" required class="form-control" id="state" name="state" [(ngModel)]="model.state" #stateRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(stateRef).text}}</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" [ngClass]="showError(zipRef).cssClass">
                         <label class="control-label" for="zip">Zip:</label>
-                        <input type="text" class="form-control" id="zip" name="zip" [(ngModel)]="model.zip">
+                        <input type="text" required class="form-control" id="zip" name="zip" [(ngModel)]="model.zip" #zipRef="ngModel">
+                        <div class="help-block" *ngIf="nameRef.touched">{{showError(zipRef).text}}</div>
                     </div>
                 </form>
             </div>
+
             <div class="modal-footer">
                 <button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
-                <button class="btn btn-primary" id="save" (click)="save()" type="button">Сохранить изменения</button>
+                <button class="btn btn-primary" type="submit" (click)="save()" [disabled]="!formRef.valid">Сохранить изменения</button>
             </div>
+
         </div>
     </div>
 </div>

@@ -9,8 +9,8 @@ import { CustomersComponent } from "../customers.component";
 })
 
 export class CustomerListComponent {
-    @Input() customers;
-    @Input() model;
+    @Input() customers: any;
+    @Input() model: any;
 
     @Output() onDelete: EventEmitter<number>;
 
@@ -18,15 +18,15 @@ export class CustomerListComponent {
         this.onDelete = new EventEmitter<number>();
     }
 
-    editShow(customer) {
+    editShow(customer: any) {
         for (let i in this.model) {
             this.model[i] = customer[i];
         }
 
-        CustomersComponent.basicModal.modal('show');
+        CustomersComponent.BASICMODAL.modal('show');
     }
 
-    deleteShow(id) {
+    deleteShow(id: number) {
        this.onDelete.emit(id);
         CustomersComponent.DELETEMODAL.modal('show');
     }

@@ -9,8 +9,4 @@ import {Customer} from "../../../shared/customer.model";
 
 export class CustomerItemComponent {
     @Input() customer: Customer;
-
-    constructor() {
-       console.log(customer);
-    }
 }

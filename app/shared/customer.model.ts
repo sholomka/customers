@@ -21,7 +21,7 @@ export class Customer implements ICustomer {
     state: string;
     zip: string;
 
-    constructor(id=null, name='', email='', telephone='', address='', street='', city='', state='', zip='') {
+    constructor(id: number = null, name='', email='', telephone='', address='', street='', city='', state='', zip='') {
         this.id = id;
         this.name = name;
         this.email = email;
